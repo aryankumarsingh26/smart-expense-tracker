@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 
@@ -54,9 +55,9 @@ def init_db():
         """)
 
         # Give old transactions a date
-        current_date = datetime.now().isoformat(
-            timespec="seconds"
-        )
+        current_date = datetime.now(
+            ZoneInfo("Asia/Kolkata")
+        ).isoformat(timespec="seconds")
 
         conn.execute("""
             UPDATE transactions
@@ -122,9 +123,9 @@ def add_transaction():
         }), 400
 
     # Current date and time
-    transaction_date = datetime.now().isoformat(
-        timespec="seconds"
-    )
+    transaction_date = datetime.now(
+        ZoneInfo("Asia/Kolkata")
+    ).isoformat(timespec="seconds")
 
     conn = get_db()
 
