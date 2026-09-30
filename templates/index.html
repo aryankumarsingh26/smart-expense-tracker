@@ -15,22 +15,58 @@
 
     <!-- HEADER -->
 
-    <header>
+    <header class="main-header">
 
-        <div class="logo">
-            💰 Smart Expense Tracker
+        <div class="header-brand">
+
+            <div class="brand-icon">
+                <span>₹</span>
+            </div>
+
+            <div class="brand-text">
+
+                <div class="brand-mini">
+                    PERSONAL FINANCE
+                </div>
+
+                <h1>
+                    Smart Expense
+                    <span>Tracker</span>
+                </h1>
+
+                <p>
+                    Manage your money smarter
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="header-right">
 
-            <p>Manage your money smarter</p>
+        <div class="header-actions">
 
-            <button id="themeToggle" class="theme-btn">
+            <div class="live-clock">
+
+                <div class="live-indicator"></div>
+
+                <div class="clock-info">
+
+                    <span class="clock-label">
+                        LIVE • IST
+                    </span>
+
+                    <span id="currentTime">
+                        00:00:00
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button id="themeToggle" class="theme-btn" type="button" title="Toggle theme">
                 🌙
             </button>
-            <div class="clock">
-                <span id="currentTime">00:00:00</span>
-            </div>
 
         </div>
 
@@ -224,4 +260,3 @@
 </body>
 
 </html>
-
