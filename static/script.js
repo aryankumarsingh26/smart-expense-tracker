@@ -5,6 +5,39 @@
 
 
 // =====================================
+// UNIQUE USER ID
+// =====================================
+
+let userId = localStorage.getItem(
+    "expenseTrackerUserId"
+);
+
+if (!userId) {
+
+    userId = crypto.randomUUID();
+
+    localStorage.setItem(
+        "expenseTrackerUserId",
+        userId
+    );
+}
+
+
+// =====================================
+// API HEADERS
+// =====================================
+
+function getHeaders() {
+
+    return {
+        "Content-Type": "application/json",
+        "X-User-ID": userId
+    };
+
+}
+
+
+// =====================================
 // FORMAT TRANSACTION DATE
 // =====================================
 
@@ -35,6 +68,7 @@ function formatTransactionDate(dateString) {
         hour12: true
 
     });
+
 }
 
 
@@ -46,36 +80,45 @@ async function loadDashboard() {
 
     try {
 
-        const response =
-            await fetch("/api/stats");
+        const response = await fetch(
+            "/api/stats",
+            {
+                headers: getHeaders()
+            }
+        );
 
         if (!response.ok) {
-            throw new Error("Failed to load dashboard");
+            throw new Error(
+                "Failed to load dashboard"
+            );
         }
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
 
-        // Balance
-
-        document.getElementById("balance").textContent =
-            "₹" + Number(data.balance).toFixed(2);
-
-
-        // Income
-
-        document.getElementById("income").textContent =
-            "₹" + Number(data.income).toFixed(2);
+        document.getElementById(
+            "balance"
+        ).textContent =
+            "₹" + Number(
+                data.balance
+            ).toFixed(2);
 
 
-        // Expenses
+        document.getElementById(
+            "income"
+        ).textContent =
+            "₹" + Number(
+                data.income
+            ).toFixed(2);
 
-        document.getElementById("expenses").textContent =
-            "₹" + Number(data.expenses).toFixed(2);
 
+        document.getElementById(
+            "expenses"
+        ).textContent =
+            "₹" + Number(
+                data.expenses
+            ).toFixed(2);
 
-        // Smart Insights
 
         generateInsight(data);
 
@@ -99,8 +142,12 @@ async function loadTransactions() {
 
     try {
 
-        const response =
-            await fetch("/api/transactions");
+        const response = await fetch(
+            "/api/transactions",
+            {
+                headers: getHeaders()
+            }
+        );
 
 
         if (!response.ok) {
@@ -122,8 +169,6 @@ async function loadTransactions() {
             );
 
 
-        // No transactions
-
         if (transactions.length === 0) {
 
             list.innerHTML = `
@@ -136,74 +181,73 @@ async function loadTransactions() {
         }
 
 
-        // Create transaction list
+        list.innerHTML =
+            transactions.map(
+                transaction => {
 
-        list.innerHTML = transactions.map(
-            transaction => {
-
-                const sign =
-                    transaction.type === "income"
-                        ? "+"
-                        : "-";
-
-
-                const amountClass =
-                    transaction.type === "income"
-                        ? "income"
-                        : "expense";
+                    const sign =
+                        transaction.type === "income"
+                            ? "+"
+                            : "-";
 
 
-                return `
+                    const amountClass =
+                        transaction.type === "income"
+                            ? "income"
+                            : "expense";
 
-                    <div class="transaction">
 
-                        <div class="transaction-info">
+                    return `
 
-                            <span class="transaction-category">
-                                ${transaction.category}
-                            </span>
+                        <div class="transaction">
 
-                            <span class="transaction-note">
-                                ${transaction.note || "No note"}
-                            </span>
+                            <div class="transaction-info">
 
-                            <span class="transaction-date">
-                                🕒 ${formatTransactionDate(
-                                    transaction.date
-                                )}
-                            </span>
+                                <span class="transaction-category">
+                                    ${transaction.category}
+                                </span>
+
+                                <span class="transaction-note">
+                                    ${transaction.note || "No note"}
+                                </span>
+
+                                <span class="transaction-date">
+                                    🕒 ${formatTransactionDate(
+                                        transaction.date
+                                    )}
+                                </span>
+
+                            </div>
+
+
+                            <div>
+
+                                <span
+                                    class="transaction-amount ${amountClass}"
+                                >
+                                    ${sign}₹${Number(
+                                        transaction.amount
+                                    ).toFixed(2)}
+                                </span>
+
+
+                                <button
+                                    class="delete-btn"
+                                    onclick="deleteTransaction(
+                                        ${transaction.id}
+                                    )"
+                                >
+                                    🗑
+                                </button>
+
+                            </div>
 
                         </div>
 
+                    `;
 
-                        <div>
-
-                            <span
-                                class="transaction-amount ${amountClass}"
-                            >
-                                ${sign}₹${Number(
-                                    transaction.amount
-                                ).toFixed(2)}
-                            </span>
-
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteTransaction(
-                                    ${transaction.id}
-                                )"
-                            >
-                                🗑
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-        ).join("");
+                }
+            ).join("");
 
 
     } catch (error) {
@@ -236,8 +280,6 @@ if (transactionForm) {
             event.preventDefault();
 
 
-            // Get values
-
             const amount =
                 document.getElementById(
                     "amount"
@@ -262,8 +304,6 @@ if (transactionForm) {
                 ).value;
 
 
-            // Validate amount
-
             if (
                 amount === "" ||
                 Number(amount) <= 0
@@ -277,8 +317,6 @@ if (transactionForm) {
             }
 
 
-            // Send transaction to Flask
-
             try {
 
                 const response =
@@ -288,10 +326,7 @@ if (transactionForm) {
 
                             method: "POST",
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
+                            headers: getHeaders(),
 
                             body: JSON.stringify({
 
@@ -317,8 +352,6 @@ if (transactionForm) {
                     await response.json();
 
 
-                // Backend error
-
                 if (!response.ok) {
 
                     alert(
@@ -330,12 +363,8 @@ if (transactionForm) {
                 }
 
 
-                // Clear form
-
                 transactionForm.reset();
 
-
-                // Refresh dashboard
 
                 await loadDashboard();
 
@@ -373,7 +402,11 @@ async function deleteTransaction(id) {
             await fetch(
                 `/api/transactions/${id}`,
                 {
-                    method: "DELETE"
+
+                    method: "DELETE",
+
+                    headers: getHeaders()
+
                 }
             );
 
@@ -386,8 +419,6 @@ async function deleteTransaction(id) {
 
         }
 
-
-        // Refresh everything
 
         await loadDashboard();
 
@@ -438,10 +469,6 @@ function generateInsight(data) {
         data.categories || [];
 
 
-    // =====================================
-    // NO TRANSACTIONS
-    // =====================================
-
     if (
         income === 0 &&
         expenses === 0
@@ -473,18 +500,11 @@ function generateInsight(data) {
     }
 
 
-    // =====================================
-    // HIGHEST SPENDING CATEGORY
-    // =====================================
-
     let highestCategory = null;
 
 
     if (categories.length > 0) {
-
-        highestCategory =
-            categories[0];
-
+        highestCategory = categories[0];
     }
 
 
@@ -518,19 +538,11 @@ function generateInsight(data) {
     }
 
 
-    // =====================================
-    // EXPENSE RATIO
-    // =====================================
-
     const expenseRatio =
         income > 0
             ? (expenses / income) * 100
             : 0;
 
-
-    // =====================================
-    // FINANCIAL STATUS
-    // =====================================
 
     let status;
 
@@ -578,10 +590,6 @@ function generateInsight(data) {
     }
 
 
-    // =====================================
-    // SAVING TIP
-    // =====================================
-
     let savingTip;
 
 
@@ -618,10 +626,6 @@ function generateInsight(data) {
 
     }
 
-
-    // =====================================
-    // CATEGORY BREAKDOWN
-    // =====================================
 
     let categoryHTML = "";
 
@@ -676,14 +680,9 @@ function generateInsight(data) {
         });
 
 
-    // =====================================
-    // DISPLAY INSIGHT
-    // =====================================
-
     insight.innerHTML = `
 
         <div class="insight-main">
-
 
             <div class="insight-top">
 
@@ -691,13 +690,11 @@ function generateInsight(data) {
                     💡
                 </div>
 
-
                 <div>
 
                     <div class="insight-label">
                         TOP SPENDING CATEGORY
                     </div>
-
 
                     <div class="insight-title">
                         ${categoryName}
@@ -710,13 +707,11 @@ function generateInsight(data) {
 
             <div class="insight-stat">
 
-
                 <div>
 
                     <span class="stat-label">
                         Spent
                     </span>
-
 
                     <strong>
                         ₹${categoryAmount.toFixed(2)}
@@ -730,7 +725,6 @@ function generateInsight(data) {
                     <span class="stat-label">
                         Share
                     </span>
-
 
                     <strong>
                         ${categoryPercentage.toFixed(1)}%
@@ -747,7 +741,6 @@ function generateInsight(data) {
                     ${statusIcon}
                 </span>
 
-
                 <span>
                     ${status}
                 </span>
@@ -757,13 +750,11 @@ function generateInsight(data) {
 
             <div class="insight-balance">
 
-
                 <div>
 
                     <span>
                         Remaining Balance
                     </span>
-
 
                     <strong>
                         ₹${balance.toFixed(2)}
@@ -777,7 +768,6 @@ function generateInsight(data) {
                     <span>
                         Spent vs Income
                     </span>
-
 
                     <strong>
                         ${expenseRatio.toFixed(1)}%
@@ -796,11 +786,8 @@ function generateInsight(data) {
                             Spending Breakdown
                         </div>
 
-
                         <div class="category-breakdown">
-
                             ${categoryHTML}
-
                         </div>
 
                     `
@@ -814,13 +801,11 @@ function generateInsight(data) {
                     💰
                 </span>
 
-
                 <div>
 
                     <strong>
                         Smart Tip
                     </strong>
-
 
                     <p>
                         ${savingTip}
@@ -829,7 +814,6 @@ function generateInsight(data) {
                 </div>
 
             </div>
-
 
         </div>
 
@@ -855,8 +839,6 @@ if (themeToggle) {
         );
 
 
-    // Load saved theme
-
     if (
         savedTheme === "dark"
     ) {
@@ -880,8 +862,6 @@ if (themeToggle) {
 
     }
 
-
-    // Toggle theme
 
     themeToggle.addEventListener(
         "click",
@@ -970,12 +950,8 @@ function updateClock() {
 }
 
 
-// Show immediately
-
 updateClock();
 
-
-// Update every second
 
 setInterval(
     updateClock,
