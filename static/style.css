@@ -1,8 +1,6 @@
-/* =========================================================
-   SMART EXPENSE TRACKER - COMPLETE CSS
-   ========================================================= */
-
-/* ---------- RESET ---------- */
+/* =========================================
+   RESET
+========================================= */
 
 * {
     margin: 0;
@@ -16,125 +14,38 @@ html {
 
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-    background: #080808;
-    color: #ffffff;
-    min-height: 100vh;
-    line-height: 1.5;
+    background: #ffffff;
+    color: #111827;
+    transition: 0.3s ease;
 }
 
 
-/* =========================================================
+/* =========================================
    HEADER
-   ========================================================= */
+========================================= */
 
 header {
-    width: 100%;
+    position: relative;
+
     min-height: 105px;
-    padding: 20px 42px;
+
+    padding: 22px 8%;
+
+    background: #111827;
+    color: white;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    background: linear-gradient(
-        135deg,
-        #0d1635 0%,
-        #121d43 50%,
-        #171f48 100%
-    );
-
-    border-bottom: 1px solid rgba(80, 130, 255, 0.45);
-
-    box-shadow:
-        0 5px 25px rgba(0, 0, 0, 0.45);
-
-    position: relative;
-    z-index: 10;
+    border-bottom: 1px solid #1f2937;
 }
 
-
-/* Header left section */
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-}
-
-
-/* Rupee/logo box */
-
-.logo,
-.logo-box {
-    width: 64px;
-    height: 64px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background: linear-gradient(
-        135deg,
-        #3769ff,
-        #2446d9
-    );
-
-    color: white;
-
-    font-size: 32px;
-    font-weight: 800;
-
-    box-shadow:
-        0 8px 25px rgba(39, 91, 255, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.2);
-}
-
-
-/* Header title */
-
-header h1 {
+.logo {
     font-size: 27px;
-    font-weight: 800;
+    font-weight: 750;
     letter-spacing: -0.5px;
 }
-
-header h1 span {
-    color: #6495ff;
-}
-
-
-/* Small heading */
-
-.header-subtitle,
-header small {
-    display: block;
-
-    margin-bottom: 3px;
-
-    color: #568dff;
-
-    font-size: 12px;
-    font-weight: 800;
-
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-
-/* Tagline */
-
-header p {
-    margin-top: 2px;
-
-    color: #8c9bc2;
-
-    font-size: 14px;
-}
-
-
-/* Header right section */
 
 .header-right {
     display: flex;
@@ -142,415 +53,285 @@ header p {
     gap: 15px;
 }
 
-
-/* Live clock */
-
-.live-time {
-    padding: 12px 18px;
-
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    border-radius: 15px;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    color: #d9def0;
-
-    font-size: 14px;
-    font-weight: 600;
+.header-right p {
+    color: #cbd5e1;
+    font-size: 15px;
 }
 
-.live-time::before {
-    content: "";
 
-    width: 9px;
-    height: 9px;
+/* =========================================
+   CLOCK
+========================================= */
+
+.clock {
+    min-width: 108px;
+
+    padding: 9px 13px;
+
+    background: #1f2937;
+
+    color: #ffffff;
+
+    border: 1px solid #374151;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    font-variant-numeric: tabular-nums;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================
+   THEME BUTTON
+========================================= */
+
+.theme-btn {
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
 
     border-radius: 50%;
 
-    background: #19d66b;
+    border: 1px solid #475569;
 
-    box-shadow: 0 0 10px #19d66b;
-}
+    background: #334155;
 
+    color: white;
 
-/* Theme button */
+    font-size: 19px;
 
-.theme-toggle,
-.theme-btn {
-    width: 52px;
-    height: 52px;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-
-    background: rgba(255, 255, 255, 0.07);
-
-    cursor: pointer;
-
-    font-size: 22px;
-
     transition: 0.25s ease;
 }
 
-.theme-toggle:hover,
 .theme-btn:hover {
-    transform: translateY(-2px);
+    transform: rotate(15deg) scale(1.08);
 
-    background: rgba(255, 255, 255, 0.13);
-
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.3);
+    background: #475569;
 }
 
 
-/* =========================================================
-   MAIN CONTENT
-   ========================================================= */
+/* =========================================
+   MAIN
+========================================= */
 
 main {
-    width: 100%;
-    max-width: 1500px;
+    width: 90%;
+    max-width: 1250px;
 
-    margin: 0 auto;
-
-    /* IMPORTANT:
-       This creates the larger gap below the header */
-    padding: 42px 36px 70px;
+    margin: 35px auto;
 }
 
 
-/* If your main wrapper has a container class */
+/* =========================================
+   DASHBOARD CARDS
+========================================= */
 
-.container {
-    width: 100%;
-    max-width: 1500px;
-
-    margin: 0 auto;
-
-    padding: 42px 36px 70px;
-}
-
-
-/* =========================================================
-   DASHBOARD / SUMMARY CARDS
-   ========================================================= */
-
-.summary,
-.summary-cards,
-.balance-cards,
-.stats {
+.dashboard {
     display: grid;
 
     grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+        repeat(3, 1fr);
 
-    gap: 28px;
+    gap: 22px;
 
-    margin-bottom: 38px;
+    margin-bottom: 28px;
 }
 
-
-/* Individual card */
-
-.card,
-.summary-card,
-.stat-card {
+.card {
     position: relative;
 
-    min-height: 185px;
+    background: #fbf5f5;
 
-    padding: 30px 34px;
+    padding: 25px 27px;
 
-    overflow: hidden;
+    border-radius: 18px;
 
-    background: #111111;
-
-    border: 1px solid #272727;
-
-    border-radius: 22px;
+    border: 1px solid #e5e7eb;
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.35);
+        0 8px 25px rgba(15, 23, 42, 0.06);
 
     transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+        box-shadow 0.25s ease;
 }
 
-
-.card:hover,
-.summary-card:hover,
-.stat-card:hover {
-    transform: translateY(-4px);
+.card:hover {
+    transform: translateY(-3px);
 
     box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.5);
+        0 14px 30px rgba(15, 23, 42, 0.1);
 }
 
+.card h3 {
+    margin-bottom: 10px;
 
-/* Blue card */
+    color: #64748b;
 
-.balance-card {
-    border-left: 5px solid #2877ff;
+    font-size: 14px;
+
+    font-weight: 600;
 }
 
-
-/* Green card */
-
-.income-card {
-    border-left: 5px solid #16d96b;
-}
-
-
-/* Red card */
-
-.expense-card {
-    border-left: 5px solid #ff3f46;
-}
-
-
-/* Card headings */
-
-.card h3,
-.summary-card h3,
-.stat-card h3 {
-    margin-bottom: 13px;
-
-    font-size: 15px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-
-    text-transform: uppercase;
-}
-
-
-/* Heading colors */
-
-.balance-card h3 {
-    color: #4183ff;
-}
-
-.income-card h3 {
-    color: #15d86b;
-}
-
-.expense-card h3 {
-    color: #ff4148;
-}
-
-
-/* Amount */
-
-.card .amount,
-.summary-card .amount,
-.stat-card .amount {
-    font-size: 38px;
-
-    font-weight: 800;
+.card h2 {
+    font-size: 31px;
 
     letter-spacing: -1px;
 }
 
 
-/* Decorative circle */
+/* Card indicators */
 
-.card::after,
-.summary-card::after,
-.stat-card::after {
-    content: "";
+.balance-card {
+    border-left: 5px solid #2563eb;
+}
 
-    position: absolute;
+.income-card {
+    border-left: 5px solid #16a34a;
+}
 
-    width: 145px;
-    height: 145px;
-
-    right: -50px;
-    bottom: -65px;
-
-    border-radius: 50%;
-
-    opacity: 0.35;
+.expense-card {
+    border-left: 5px solid #ef4444;
 }
 
 
-/* Blue circle */
+/* =========================================
+   ADD TRANSACTION
+========================================= */
 
-.balance-card::after {
-    background: #172b61;
-}
+.form-section {
+    background: #c9f7dd;
 
+    padding: 30px;
 
-/* Green circle */
+    border-radius: 18px;
 
-.income-card::after {
-    background: #0b3925;
-}
-
-
-/* Red circle */
-
-.expense-card::after {
-    background: #40171a;
-}
-
-
-/* =========================================================
-   TRANSACTION SECTION
-   ========================================================= */
-
-.transaction-section,
-.add-transaction,
-.form-container {
-    width: 100%;
-
-    margin-top: 10px;
-
-    padding: 32px;
-
-    background: #111111;
-
-    border: 1px solid #282828;
-
-    border-radius: 22px;
+    border: 1px solid #e5e7eb;
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.35);
+        0 8px 25px rgba(15, 23, 42, 0.06);
+
+    margin-bottom: 28px;
 }
 
+.form-section h2 {
+    font-size: 23px;
 
-/* Section title */
-
-.transaction-section h2,
-.add-transaction h2,
-.form-container h2 {
     margin-bottom: 25px;
 
-    font-size: 24px;
-
-    font-weight: 800;
+    letter-spacing: -0.4px;
 }
 
 
-/* =========================================================
-   FORM
-   ========================================================= */
+/* Form layout */
 
-form {
-    width: 100%;
+#transactionForm {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px 24px;
 }
 
+.form-group {
+    display: flex;
 
-/* Form group */
-
-.form-group,
-.input-group {
-    margin-bottom: 20px;
+    flex-direction: column;
 }
 
-
-/* Labels */
-
-label {
-    display: block;
-
+.form-group label {
     margin-bottom: 8px;
-
-    color: #eeeeee;
 
     font-size: 14px;
 
-    font-weight: 700;
+    font-weight: 650;
+
+    color: #374151;
 }
 
 
-/* Inputs / Selects / Textareas */
+/* =========================================
+   INPUTS
+========================================= */
 
 input,
-select,
-textarea {
+select {
     width: 100%;
 
-    padding: 15px 17px;
+    height: 48px;
 
-    color: #ffffff;
+    padding: 0 14px;
 
-    background: #050505;
+    border: 1px solid #d1d5db;
 
-    border: 1px solid #303030;
+    border-radius: 10px;
 
-    border-radius: 12px;
+    background: #ffffff;
 
-    outline: none;
+    color: #111827;
 
     font-size: 15px;
 
+    outline: none;
+
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        box-shadow 0.2s ease;
 }
 
-
-input::placeholder,
-textarea::placeholder {
-    color: #727272;
+input:hover,
+select:hover {
+    border-color: #9ca3af;
 }
-
 
 input:focus,
-select:focus,
-textarea:focus {
-    border-color: #3978ff;
-
-    background: #080808;
+select:focus {
+    border-color: #2563eb;
 
     box-shadow:
-        0 0 0 3px rgba(57, 120, 255, 0.12);
+        0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 
-textarea {
-    min-height: 100px;
+/* =========================================
+   ADD BUTTON
+========================================= */
 
-    resize: vertical;
-}
+#transactionForm button[type="submit"] {
+    position: relative;
 
+    width: 100%;
 
-/* Select dropdown */
+    height: 48px;
 
-select {
-    cursor: pointer;
-}
+    margin-top: 24px;
 
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button,
-.btn {
-    padding: 14px 24px;
+    padding: 0;
 
     border: none;
 
-    border-radius: 12px;
+    border-radius: 10px;
 
     background: linear-gradient(
         135deg,
-        #2867ff,
-        #174bd8
+        #2563eb,
+        #1d4ed8
     );
 
     color: white;
@@ -561,373 +342,1022 @@ button,
 
     cursor: pointer;
 
+    overflow: hidden;
+
     transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease;
+        box-shadow 0.2s ease;
 }
 
-
-button:hover,
-.btn:hover {
+#transactionForm button[type="submit"]:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 8px 20px rgba(39, 95, 255, 0.3);
+        0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+#transactionForm button[type="submit"]:active {
+    transform: scale(0.98);
 }
 
 
-button:active,
-.btn:active {
-    transform: translateY(0);
+/* =========================================
+   TRANSACTION + INSIGHTS AREA
+========================================= */
+
+.content-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.8fr 1fr;
+
+    gap: 25px;
 }
-
-
-/* =========================================================
-   TRANSACTION LIST
-   ========================================================= */
 
 .transactions,
-.transaction-list {
-    margin-top: 35px;
+.insights {
+    background: #d6ffe8;
+
+    padding: 27px;
+
+    border-radius: 18px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 8px 25px rgba(15, 23, 42, 0.06);
+}
+
+.transactions h2,
+.insights h2 {
+    margin-bottom: 20px;
+
+    font-size: 22px;
 }
 
 
-.transaction-item {
+/* =========================================
+   TRANSACTIONS
+========================================= */
+
+.transaction {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
-    padding: 18px 20px;
+    gap: 20px;
 
-    margin-bottom: 12px;
+    padding: 16px 0;
 
-    background: #151515;
+    border-bottom: 1px solid #eef0f3;
 
-    border: 1px solid #292929;
-
-    border-radius: 14px;
-
-    transition: 0.2s ease;
+    transition: background 0.2s ease;
 }
 
+.transaction:hover {
+    background: #f8fafc;
 
-.transaction-item:hover {
-    background: #191919;
+    border-radius: 10px;
 
-    border-color: #383838;
+    padding-left: 10px;
 
-    transform: translateX(3px);
+    padding-right: 10px;
 }
 
-
-/* =========================================================
-   TRANSACTION TYPE
-   ========================================================= */
-
-.income {
-    color: #19db70;
+.transaction:last-child {
+    border-bottom: none;
 }
 
-.expense {
-    color: #ff4a50;
+.transaction-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
 }
 
+.transaction-category {
+    font-size: 15px;
 
-/* =========================================================
-   DELETE BUTTON
-   ========================================================= */
+    font-weight: 700;
 
-.delete-btn {
-    padding: 9px 14px;
+    color: #111827;
+}
 
-    background: #391719;
-
-    color: #ff5b60;
-
-    border: 1px solid #5b2327;
-
-    border-radius: 9px;
-
+.transaction-note {
     font-size: 13px;
-}
 
+    color: #64748b;
 
-.delete-btn:hover {
-    background: #541d21;
-
-    box-shadow: none;
-}
-
-
-/* =========================================================
-   TABLE
-   ========================================================= */
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    margin-top: 25px;
+    white-space: nowrap;
 
     overflow: hidden;
 
+    text-overflow: ellipsis;
+
+    max-width: 250px;
+}
+
+
+/* Right side */
+
+.transaction > div:last-child {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.transaction-amount {
+    font-size: 15px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+}
+
+.income {
+    color: #16a34a;
+}
+
+.expense {
+    color: #ef4444;
+}
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+
+.delete-btn {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    margin-left: 5px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f5aeb3;
+
+    color: #dc2626;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    background: #996060;
+
+    transform: scale(1.08);
+}
+
+.delete-btn:active {
+    transform: scale(0.9);
+}
+
+
+/* =========================================
+   SMART INSIGHTS
+========================================= */
+
+#insight {
+    position: relative;
+
+    padding: 20px;
+
     border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f5f3ff
+        );
+
+    border: 1px solid #dbeafe;
+
+    color: #1e40af;
+
+    line-height: 1.7;
+
+    font-size: 15px;
+}
+
+#insight::before {
+    content: "AI";
+
+    position: absolute;
+
+    top: -10px;
+
+    right: 15px;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
 }
 
 
-th {
-    padding: 16px;
-
-    background: #171717;
-
-    color: #8daeff;
-
-    text-align: left;
-
-    font-size: 13px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 0.8px;
-}
-
-
-td {
-    padding: 16px;
-
-    border-top: 1px solid #292929;
-
-    color: #dddddd;
-}
-
-
-tr {
-    transition: 0.2s ease;
-}
-
-
-tbody tr:hover {
-    background: #151515;
-}
-
-
-/* =========================================================
+/* =========================================
    EMPTY STATE
-   ========================================================= */
+========================================= */
 
-.empty-state {
-    padding: 45px 20px;
-
+.empty {
     text-align: center;
 
-    color: #777777;
+    color: #94a3b8;
+
+    padding: 40px 15px;
+
+    font-size: 14px;
 }
 
 
-.empty-state h3 {
-    margin-bottom: 8px;
-
-    color: #aaaaaa;
-}
-
-
-/* =========================================================
+/* =========================================
    FOOTER
-   ========================================================= */
+========================================= */
 
 footer {
-    padding: 30px 20px;
-
     text-align: center;
 
-    color: #666666;
+    padding: 30px;
+
+    color: #94a3b8;
 
     font-size: 13px;
-
-    border-top: 1px solid #222222;
 }
 
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
+/* =========================================
+   RIPPLE
+========================================= */
 
-::-webkit-scrollbar {
-    width: 9px;
+.ripple {
+    position: absolute;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.45);
+
+    transform: scale(0);
+
+    animation: ripple-animation 0.6s linear;
+
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+
+    to {
+        transform: scale(4);
+
+        opacity: 0;
+    }
 }
 
 
-::-webkit-scrollbar-track {
-    background: #080808;
+/* =========================================
+   DARK MODE DASHBOARD CARDS
+========================================= */
+body.dark {
+    background: #1e1b1b;
+    color: #ffffff;
+}
+
+body.dark .card {
+    background: #090909;
+    color: #faf8f8;
+    border-top: 1px solid #252525;
+    border-right: 1px solid #252525;
+    border-bottom: 1px solid #252525;
 }
 
 
-::-webkit-scrollbar-thumb {
-    background: #303030;
+/* BALANCE - BLUE */
 
-    border-radius: 10px;
+body.dark .balance-card {
+    border-left: 5px solid #3b82f6 !important;
+}
+
+body.dark .balance-card h3 {
+    color: #3b82f6;
+}
+
+body.dark .balance-card::before {
+    background: #172554;
+    color: #60a5fa;
 }
 
 
-::-webkit-scrollbar-thumb:hover {
-    background: #454545;
+/* INCOME - GREEN */
+
+body.dark .income-card {
+    border-left: 5px solid #22c55e !important;
+}
+
+body.dark .income-card h3 {
+    color: #22c55e;
+}
+
+body.dark .income-card::before {
+    background: #052e16;
+    color: #4ade80;
 }
 
 
-/* =========================================================
-   RESPONSIVE - TABLET
-   ========================================================= */
+/* EXPENSE - RED */
+
+body.dark .expense-card {
+    border-left: 5px solid #ef4444 !important;
+}
+
+body.dark .expense-card h3 {
+    color: #ef4444;
+}
+
+body.dark .expense-card::before {
+    background: #450a0a;
+    color: #f87171;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
 
 @media (max-width: 900px) {
 
-    header {
-        padding: 18px 25px;
+    main {
+        width: 92%;
     }
 
-    main,
-    .container {
-        padding: 35px 25px 60px;
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .summary,
-    .summary-cards,
-    .balance-cards,
-    .stats {
+    .balance-card {
+        grid-column: span 2;
+    }
+
+    .content-grid {
         grid-template-columns: 1fr;
-    }
-
-    .header-right {
-        gap: 8px;
-    }
-
-    .live-time {
-        padding: 10px 13px;
     }
 }
 
 
-/* =========================================================
-   RESPONSIVE - MOBILE
-   ========================================================= */
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 600px) {
 
     header {
         min-height: auto;
 
-        padding: 18px;
+        padding: 18px 5%;
 
         flex-direction: column;
 
-        align-items: flex-start;
+        text-align: center;
 
-        gap: 18px;
+        gap: 14px;
     }
 
-    .header-left {
-        width: 100%;
+    .logo {
+        font-size: 22px;
     }
 
     .header-right {
         width: 100%;
 
-        justify-content: space-between;
+        justify-content: center;
+
+        flex-wrap: wrap;
     }
 
-    .logo,
-    .logo-box {
-        width: 52px;
-        height: 52px;
-
-        font-size: 25px;
+    .header-right p {
+        font-size: 13px;
     }
 
-    header h1 {
-        font-size: 21px;
+    main {
+        width: 94%;
+
+        margin: 20px auto;
     }
 
-    header p {
-        font-size: 12px;
+    .dashboard {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
     }
 
-    main,
-    .container {
-        padding: 30px 15px 50px;
+    .balance-card {
+        grid-column: auto;
     }
 
-    .summary,
-    .summary-cards,
-    .balance-cards,
-    .stats {
-        gap: 16px;
-
-        margin-bottom: 25px;
+    .card {
+        padding: 20px;
     }
 
-    .card,
-    .summary-card,
-    .stat-card {
-        min-height: 155px;
-
-        padding: 25px;
+    .card h2 {
+        font-size: 27px;
     }
 
-    .card .amount,
-    .summary-card .amount,
-    .stat-card .amount {
-        font-size: 31px;
+    .form-section {
+        padding: 21px;
     }
 
-    .transaction-section,
-    .add-transaction,
-    .form-container {
-        padding: 22px 18px;
+    #transactionForm {
+        grid-template-columns: 1fr;
 
-        border-radius: 17px;
+        gap: 15px;
     }
 
-    .transaction-item {
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 12px;
+    #transactionForm button[type="submit"] {
+        margin-top: 5px;
     }
 
-    table {
-        display: block;
+    .content-grid {
+        grid-template-columns: 1fr;
 
-        overflow-x: auto;
+        gap: 18px;
+    }
 
-        white-space: nowrap;
+    .transactions,
+    .insights {
+        padding: 21px;
+    }
+
+    .transaction {
+        gap: 10px;
+    }
+
+    .transaction-note {
+        max-width: 150px;
     }
 }
 
 
-/* =========================================================
-   EXTRA SPACING FIX
-   ========================================================= */
+/* =========================================
+   SMALL PHONES
+========================================= */
 
-/*
-   If your cards are directly after the header and
-   your HTML does NOT use <main>, this selector makes
-   the first content section start lower.
-*/
+@media (max-width: 380px) {
 
-header + section,
-header + .dashboard,
-header + .container,
-header + .content {
-    padding-top: 40px;
+    .logo {
+        font-size: 19px;
+    }
+
+    .clock {
+        font-size: 13px;
+
+        min-width: 95px;
+    }
+
+    .card h2 {
+        font-size: 24px;
+    }
+
+    .form-section h2,
+    .transactions h2,
+    .insights h2 {
+        font-size: 20px;
+    }
+
+    .transaction-amount {
+        font-size: 13px;
+    }
+}
+
+/* =========================================
+   FIX DARK MODE CONTENT BOXES
+========================================= */
+
+body.dark .form-section,
+body.dark .transactions,
+body.dark .insights {
+    background: #111111 !important;
+    color: #ffffff !important;
+
+    border: 1px solid #252525 !important;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 
-/* Make sure the first dashboard section has breathing room */
+/* Form heading */
 
-main > :first-child,
-.container > :first-child {
-    margin-top: 0;
+body.dark .form-section h2 {
+    color: #ffffff;
+}
+
+
+/* Form labels */
+
+body.dark .form-section label {
+    color: #e5e7eb;
+}
+
+
+/* Transaction heading */
+
+body.dark .transactions h2,
+body.dark .insights h2 {
+    color: #ffffff;
+}
+
+
+/* Transaction text */
+
+body.dark .transaction-category {
+    color: #ffffff;
+}
+
+body.dark .transaction-note {
+    color: #9ca3af;
+}
+
+
+/* Transaction separators */
+
+body.dark .transaction {
+    border-bottom-color: #292929;
+}
+
+
+/* Transaction hover */
+
+body.dark .transaction:hover {
+    background: #181818;
+}
+
+
+/* Input fields */
+
+body.dark input,
+body.dark select {
+    background: #050505 !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}
+
+
+/* Placeholder */
+
+body.dark input::placeholder {
+    color: #777777;
+}
+
+
+/* Smart insight box */
+
+body.dark #insight {
+    background: #111827 !important;
+    color: #bfdbfe !important;
+
+    border: 1px solid #263b61 !important;
+}
+
+
+/* Delete buttons */
+
+body.dark .delete-btn {
+    background: #2a1113;
+    color: #f87171;
+}
+
+body.dark .delete-btn:hover {
+    background: #451a1d;
+}
+
+/* =========================================
+   SMART INSIGHTS - PREMIUM UI
+========================================= */
+
+#insight {
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f5f3ff
+        );
+
+    border: 1px solid #dbeafe;
+
+    color: #172554;
+
+    line-height: 1.5;
+}
+
+
+/* -----------------------------------------
+   Top Insight
+----------------------------------------- */
+
+.insight-top {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.insight-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, 0.1);
+}
+
+.insight-label {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.8px;
+
+    color: #64748b;
+}
+
+.insight-title {
+    font-size: 20px;
+
+    font-weight: 750;
+
+    color: #1d4ed8;
+}
+
+
+/* -----------------------------------------
+   Main Statistics
+----------------------------------------- */
+
+.insight-stat {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.insight-stat > div {
+    background: rgba(255, 255, 255, 0.7);
+
+    border: 1px solid #dbeafe;
+
+    padding: 13px;
+
+    border-radius: 10px;
+}
+
+.stat-label {
+    display: block;
+
+    font-size: 11px;
+
+    color: #64748b;
+
+    margin-bottom: 4px;
+}
+
+.insight-stat strong {
+    font-size: 17px;
+
+    color: #111827;
+}
+
+
+/* -----------------------------------------
+   Status
+----------------------------------------- */
+
+.insight-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px;
+
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    font-size: 13px;
+
+    color: #334155;
+}
+
+.status-icon {
+    font-size: 18px;
+}
+
+
+/* -----------------------------------------
+   Balance
+----------------------------------------- */
+
+.insight-balance {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+.insight-balance > div {
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+}
+
+.insight-balance span {
+    display: block;
+
+    font-size: 11px;
+
+    color: #64748b;
+
+    margin-bottom: 4px;
+}
+
+.insight-balance strong {
+    font-size: 16px;
+
+    color: #111827;
+}
+
+
+/* -----------------------------------------
+   Spending Breakdown
+----------------------------------------- */
+
+.breakdown-title {
+    font-size: 13px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+
+    color: #334155;
+}
+
+.category-row {
+    margin-bottom: 11px;
+}
+
+.category-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
+
+    color: #475569;
+}
+
+.category-header span:last-child {
+    font-weight: 700;
+
+    color: #111827;
+}
+
+.category-bar {
+    height: 7px;
+
+    background: #dbeafe;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.category-progress {
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #6366f1
+        );
+
+    transition: width 0.7s ease;
+}
+
+
+/* -----------------------------------------
+   Smart Tip
+----------------------------------------- */
+
+.saving-tip {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: flex-start;
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #f0fdf4
+        );
+
+    border: 1px solid #bbf7d0;
+}
+
+.saving-tip > span {
+    font-size: 20px;
+}
+
+.saving-tip strong {
+    font-size: 12px;
+
+    color: #166534;
+}
+
+.saving-tip p {
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color: #365314;
+}
+
+
+/* =========================================
+   DARK MODE INSIGHTS
+========================================= */
+
+body.dark #insight {
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #171126
+        );
+
+    border-color: #263b61;
+
+    color: #e5e7eb;
+}
+
+body.dark .insight-icon {
+    background: #1f2937;
+}
+
+body.dark .insight-label {
+    color: #94a3b8;
+}
+
+body.dark .insight-title {
+    color: #60a5fa;
+}
+
+body.dark .insight-stat > div,
+body.dark .insight-status {
+    background: #181818;
+
+    border-color: #2d3748;
+}
+
+body.dark .stat-label,
+body.dark .insight-balance span {
+    color: #94a3b8;
+}
+
+body.dark .insight-stat strong,
+body.dark .insight-balance strong {
+    color: #ffffff;
+}
+
+body.dark .insight-status {
+    color: #cbd5e1;
+}
+
+body.dark .insight-balance > div {
+    background: #181818;
+}
+
+body.dark .breakdown-title {
+    color: #e5e7eb;
+}
+
+body.dark .category-header {
+    color: #94a3b8;
+}
+
+body.dark .category-header span:last-child {
+    color: #ffffff;
+}
+
+body.dark .category-bar {
+    background: #263449;
+}
+
+body.dark .saving-tip {
+    background:
+        linear-gradient(
+            135deg,
+            #052e16,
+            #0b3b20
+        );
+
+    border-color: #166534;
+}
+
+body.dark .saving-tip strong {
+    color: #86efac;
+}
+
+body.dark .saving-tip p {
+    color: #bbf7d0;
+}
+
+
+/* =========================================
+   MOBILE INSIGHTS
+========================================= */
+
+@media (max-width: 600px) {
+
+    .insight-stat,
+    .insight-balance {
+        grid-template-columns: 1fr;
+    }
+
+    .insight-title {
+        font-size: 18px;
+    }
+
+    .saving-tip {
+        padding: 12px;
+    }
 }
