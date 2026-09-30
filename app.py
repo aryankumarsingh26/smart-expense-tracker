@@ -19,6 +19,16 @@ def get_db():
 
 
 # =====================================
+# INDIA TIME
+# =====================================
+
+def get_india_time():
+    return datetime.now(
+        ZoneInfo("Asia/Kolkata")
+    ).isoformat(timespec="seconds")
+
+
+# =====================================
 # CREATE / UPDATE DATABASE
 # =====================================
 
@@ -26,7 +36,6 @@ def init_db():
 
     conn = get_db()
 
-    # Create table if it doesn't exist
     conn.execute("""
         CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +43,8 @@ def init_db():
             type TEXT NOT NULL,
             category TEXT NOT NULL,
             note TEXT,
-            date TEXT
+            date TEXT,
+            user_id TEXT
         )
     """)
 
@@ -43,10 +53,12 @@ def init_db():
         "PRAGMA table_info(transactions)"
     ).fetchall()
 
-    column_names = [column["name"] for column in columns]
+    column_names = [
+        column["name"]
+        for column in columns
+    ]
 
-    # If old database doesn't have date column,
-    # add it without deleting existing transactions
+    # Add date column if old database doesn't have it
     if "date" not in column_names:
 
         conn.execute("""
@@ -54,16 +66,20 @@ def init_db():
             ADD COLUMN date TEXT
         """)
 
-        # Give old transactions a date
-        current_date = datetime.now(
-            ZoneInfo("Asia/Kolkata")
-        ).isoformat(timespec="seconds")
-
         conn.execute("""
             UPDATE transactions
             SET date = ?
             WHERE date IS NULL
-        """, (current_date,))
+        """, (get_india_time(),))
+
+
+    # Add user_id column if old database doesn't have it
+    if "user_id" not in column_names:
+
+        conn.execute("""
+            ALTER TABLE transactions
+            ADD COLUMN user_id TEXT
+        """)
 
     conn.commit()
     conn.close()
@@ -79,19 +95,27 @@ def home():
 
 
 # =====================================
-# GET ALL TRANSACTIONS
+# GET TRANSACTIONS
 # =====================================
 
 @app.route("/api/transactions", methods=["GET"])
 def get_transactions():
+
+    user_id = request.headers.get("X-User-ID")
+
+    if not user_id:
+        return jsonify({
+            "error": "User ID missing"
+        }), 400
 
     conn = get_db()
 
     transactions = conn.execute("""
         SELECT *
         FROM transactions
+        WHERE user_id = ?
         ORDER BY date DESC, id DESC
-    """).fetchall()
+    """, (user_id,)).fetchall()
 
     conn.close()
 
@@ -108,6 +132,13 @@ def get_transactions():
 @app.route("/api/transactions", methods=["POST"])
 def add_transaction():
 
+    user_id = request.headers.get("X-User-ID")
+
+    if not user_id:
+        return jsonify({
+            "error": "User ID missing"
+        }), 400
+
     data = request.get_json()
 
     amount = data.get("amount")
@@ -115,30 +146,27 @@ def add_transaction():
     category = data.get("category")
     note = data.get("note", "")
 
-    # Validate required fields
     if amount is None or not transaction_type or not category:
 
         return jsonify({
             "error": "Please fill all required fields"
         }), 400
 
-    # Current date and time
-    transaction_date = datetime.now(
-        ZoneInfo("Asia/Kolkata")
-    ).isoformat(timespec="seconds")
+    transaction_date = get_india_time()
 
     conn = get_db()
 
     cursor = conn.execute("""
         INSERT INTO transactions
-        (amount, type, category, note, date)
-        VALUES (?, ?, ?, ?, ?)
+        (amount, type, category, note, date, user_id)
+        VALUES (?, ?, ?, ?, ?, ?)
     """, (
         amount,
         transaction_type,
         category,
         note,
-        transaction_date
+        transaction_date,
+        user_id
     ))
 
     conn.commit()
@@ -163,12 +191,20 @@ def add_transaction():
 )
 def delete_transaction(id):
 
+    user_id = request.headers.get("X-User-ID")
+
+    if not user_id:
+        return jsonify({
+            "error": "User ID missing"
+        }), 400
+
     conn = get_db()
 
-    conn.execute(
-        "DELETE FROM transactions WHERE id = ?",
-        (id,)
-    )
+    conn.execute("""
+        DELETE FROM transactions
+        WHERE id = ?
+        AND user_id = ?
+    """, (id, user_id))
 
     conn.commit()
     conn.close()
@@ -185,6 +221,13 @@ def delete_transaction(id):
 @app.route("/api/stats", methods=["GET"])
 def get_stats():
 
+    user_id = request.headers.get("X-User-ID")
+
+    if not user_id:
+        return jsonify({
+            "error": "User ID missing"
+        }), 400
+
     conn = get_db()
 
     # Total income
@@ -192,23 +235,28 @@ def get_stats():
         SELECT COALESCE(SUM(amount), 0)
         FROM transactions
         WHERE type = 'income'
-    """).fetchone()[0]
+        AND user_id = ?
+    """, (user_id,)).fetchone()[0]
+
 
     # Total expenses
     expenses = conn.execute("""
         SELECT COALESCE(SUM(amount), 0)
         FROM transactions
         WHERE type = 'expense'
-    """).fetchone()[0]
+        AND user_id = ?
+    """, (user_id,)).fetchone()[0]
+
 
     # Category-wise expenses
     categories = conn.execute("""
         SELECT category, SUM(amount) AS total
         FROM transactions
         WHERE type = 'expense'
+        AND user_id = ?
         GROUP BY category
         ORDER BY total DESC
-    """).fetchall()
+    """, (user_id,)).fetchall()
 
     conn.close()
 
@@ -229,11 +277,20 @@ def get_stats():
 
 
 # =====================================
+# INITIALIZE DATABASE
+# =====================================
+
+init_db()
+
+
+# =====================================
 # START APPLICATION
 # =====================================
 
 if __name__ == "__main__":
 
-    init_db()
-
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=True
+    )
